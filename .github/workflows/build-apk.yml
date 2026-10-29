@@ -27,8 +27,11 @@ jobs:
       run: |
         npm init -y
         npm install @capacitor/core @capacitor/cli @capacitor/android
-        npx cap init SingleApp com.html.singleapp --web-dir .
+        mkdir -p www
+        cp index.html www/
+        npx cap init SingleApp com.html.singleapp --web-dir www
         npx cap add android
+        npx cap sync android
         cd android
         chmod +x gradlew
         ./gradlew assembleDebug
