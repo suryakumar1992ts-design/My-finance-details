@@ -12,29 +12,18 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v4
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: 20
-
-    - name: Set up Capacitor Project
-      run: |
-        npm init -y
-        npm install @capacitor/core @capacitor/cli @capacitor/android
-        npx cap init SingleApp com.html.singleapp --web-dir .
-
-    - name: Add Android Platform
-      run: |
-        npx cap add android
-
     - name: Set up JDK (Java Development Kit)
       uses: actions/setup-java@v4
       with:
         distribution: 'temurin'
         java-version: '17'
 
-    - name: Build APK using Gradle
+    - name: Build Capacitor and APK
       run: |
+        npm init -y
+        npm install @capacitor/core @capacitor/cli @capacitor/android
+        npx cap init SingleApp com.html.singleapp --web-dir .
+        npx cap add android
         cd android
         chmod +x gradlew
         ./gradlew assembleDebug
